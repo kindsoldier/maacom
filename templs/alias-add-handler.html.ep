@@ -1,0 +1,31 @@
+%#
+%# $Id$
+%#
+% layout 'default';
+% title 'Mail';
+
+% use Mojo::Util qw(dumper);
+
+% my $u = $c->app->user;
+
+% my $alias_name = $c->req->param('alias_name');
+% my $domain_id = $c->req->param('domain_id');
+% my $list = $c->req->param('list');
+
+% my $cid = $u->alias_exist($alias_name, $domain_id);
+
+% if ($cid) {
+    <div class="callout warning">Alias <%= $alias_name %> already exists</div>
+% }
+
+% unless ($cid) {
+    % my $id = $u->alias_add($alias_name, $list, $domain_id);
+    % if ($id) {
+        <div class="callout success">Alias <%= $alias_name %> has been added.</div>
+    % }
+
+    % unless ($id) {
+        <div class="callout alert">Alias <%= $alias_name %> was not added.</div>
+    % }
+% }
+%#EOF

@@ -1,0 +1,38 @@
+%#
+%# $Id$
+%#
+% layout 'default';
+% title 'Mail';
+
+% use Mojo::Util qw(dumper);
+
+% my $u = $c->app->user;
+
+% my $user_id = $c->req->param('user_id') || 0;
+% my $password = $c->req->param('password');
+
+% my $profile = $u->user_profile($user_id);
+
+% if ($profile) {
+    % my $domain_id = $profile->{domain_id};
+    % my $domain_name = $profile->{domain_name};
+    % my $address = $profile->{address};
+
+    % my $res = $u->user_update($user_id, password => $password);
+    % if ($res) {
+        <div class="callout success">User <%= $address %> has been updated.</div>
+    % }
+    % unless ($res) {
+        <div class="callout alert">User <%= $address %> was not updated.</div>
+    % }
+% }
+
+% unless ($profile) {
+        <div class="callout warning">User with id <%= $user_id %> not exist</div>
+% }
+
+%#EOF
+
+
+
+

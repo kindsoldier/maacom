@@ -1,0 +1,41 @@
+%#
+%# $Id$
+%#
+% layout 'default';
+% title 'Mail';
+
+% use Mojo::Util qw(dumper);
+
+% my $u = $c->app->user;
+
+% my $name = $c->req->param('domain_name');
+% my $domain_id = $c->req->param('domain_id') || 0;
+% my $profile = $u->domain_profile($domain_id);
+
+% if ($profile) {
+    % my $cid = $u->domain_exist($name);
+    % if ($cid) {
+        <div class="callout warning">Domain <%= $name %> already exists</div>
+    % }
+
+    % unless ($cid) {
+        % my $res = $u->domain_update($domain_id, name => $name);
+        % if ($res) {
+            <div class="callout success">Domain <%= $name %> has been updated.</div>
+        % }
+
+        % unless ($res) {
+            <div class="callout alert">Domain <%= $name %> was not updated.</div>
+        % }
+    % }
+% }
+
+% unless ($profile) {
+        <div class="callout warning">Domain with id <%= $domain_id %> not exist</div>
+% }
+
+%#EOF
+
+
+
+

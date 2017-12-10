@@ -1,0 +1,123 @@
+%#
+%# $Id$
+%#
+% layout 'default';
+% title 'Mail';
+
+% use Mojo::Util qw(dumper);
+
+% my $req = $c->req;
+% my $u = $c->app->user;
+
+% my $domain_id = $req->param('domain_id');
+
+% unless ($domain_id) {
+    <h5 class="text-center">
+      Aliases <a href="/alias/list"><i class="fi-refresh"></i></a>
+      <a class="float-right button tiny" href="/alias/add/form">
+        <i class="fi-plus"></i>
+      </a>
+    </h5>
+
+    % my $list = $u->alias_list;
+
+    <table class="hover" id="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>alias</th>
+                <th><i class="fi-male-female"></i></th>
+                <th><i class="fi-at-sign"></i></th>
+                <th><i class="fi-address-book"></i></th>
+                <th><i class="fi-pencil"></i></th>
+                <th><i class="fi-trash"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+        % my $n = 0;
+        % if ($list) {
+            % foreach my $row (@$list) {
+                % $n += 1;
+                % my $alias_id = $row->{id};
+                % my $address = $row->{address};
+                % my $domain_id = $row->{domain_id};
+                % my $count = split ",", $row->{list};
+                <tr>
+                    <td><%= $n %></td>
+                    <td><%= $address %></td>
+                    <td><%= $count %></td>
+                    <td><a href="/alias/list?domain_id=<%= $domain_id %>"><i class="fi-at-sign"></i></a></td>
+                    <td><a href="/alias/rename/form?alias_id=<%= $alias_id %>"><i class="fi-address-book"></i></a></td>
+                    <td><a href="/alias/update/form?alias_id=<%= $alias_id %>"><i class="fi-pencil"></i></a></td>
+                    <td><a href="/alias/delete/form?alias_id=<%= $alias_id %>"><i class="fi-trash"></i></a></td>
+                </tr>
+            % }
+        % }
+        </tbody>
+    </table>
+% }
+
+% if ($domain_id) {
+    <h5 class="text-center">
+      Aliases <a href="/alias/list?domain_id=<%= $domain_id %>"><i class="fi-refresh"></i></a>
+      <a class="float-right button tiny" href="/alias/add/form?domain_id=<%= $domain_id %>">
+        <i class="fi-plus"></i>
+      </a>
+    </h5>
+
+    % my $list = $u->alias_list($domain_id);
+
+    <table class="hover" id="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>alias</th>
+                <th><i class="fi-male-female"></i></th>
+                <th><i class="fi-address-book"></i></th>
+                <th><i class="fi-pencil"></i></th>
+                <th><i class="fi-trash"></i></th>
+            </tr>
+        </thead>
+        <tbody>
+        % if ($list) {
+            % my $n = 0;
+            % foreach my $row (@$list) {
+                % $n += 1;
+                % my $c = split ',', $row->{list};
+
+                % my $alias_id = $row->{id};
+                % my $address = $row->{address};
+                % my $domain_id = $row->{domain_id};
+                % my $count = split ",", $row->{list};
+                <tr>
+                    <td><%= $n %></td>
+                    <td><%= $address %></td>
+                    <td><%= $count %></td>
+                    <td><a href="/alias/rename/form?alias_id=<%= $alias_id %>"><i class="fi-address-book"></i></a></td>
+                    <td><a href="/alias/update/form?alias_id=<%= $alias_id %>"><i class="fi-pencil"></i></a></td>
+                    <td><a href="/alias/delete/form?alias_id=<%= $alias_id %>"><i class="fi-trash"></i></a></td>
+                </tr>
+            % }
+        % }
+        </tbody>
+    </table>
+% }
+
+<script>
+$.extend(true, $.fn.dataTable.defaults, {
+    "searching": true,
+    "ordering": true,
+    "language": {
+        "search": "",
+        "lengthMenu": "_MENU_",
+        "info": "_START_-_END_ of _TOTAL_",
+        "infoEmpty": "",
+    },
+});
+
+$(document).ready(function() {
+    $('#table').DataTable();
+});
+</script>
+%# EOF
+

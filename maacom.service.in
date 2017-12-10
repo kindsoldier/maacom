@@ -1,0 +1,12 @@
+[Unit]
+Description=maacom
+
+[Service]
+Type=forking
+PIDFile=@APP_RUNDIR@/maacom.pid
+ExecStart=@prefix@/sbin/maacom
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+

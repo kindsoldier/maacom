@@ -1,0 +1,77 @@
+%#
+%# $Id$
+%#
+% layout 'default';
+% title 'Mail';
+
+% use Mojo::Util qw(dumper);
+
+% my $u = $c->app->user;
+
+% my $domain_id = $c->req->param('domain_id');
+
+% if ($domain_id) {
+    % my $profile = $u->domain_profile($domain_id);
+    % my $domain_name = $profile->{name};
+    <div class="grid-container">
+        <div class="grid-x grid-padding-x">
+          <div class="medium-6 medium-centered cell">
+
+            <form accept-charset="UTF-8" action="/alias/add/handler" method="get" data-abide novalidate>
+                <h5 class="text-center">Add alias to domain <%= $domain_name %></h5>
+                <input type="hidden" name="domain_id" value="<%= $domain_id %>"/>
+                <label>Alias name
+                    <input type="text" name="alias_name" placeholder="aliasname" required pattern="[_.a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,42}"/>
+                    <span class="form-error">Mandatory, 2 or more letter</span>
+                </label>
+                <label>Destination list
+                    <input type="text" name="list" placeholder="some@bare.org,foo@bar.com" required pattern="[_.,@a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{5,42}"/>
+                    <span class="form-error">Mandatory, 6 or more letter</span>
+                </label>
+                <div class="text-center">
+                    <button type="submit" class="button">Accept</button>
+                    <a class="button" href="/alias/list?domain_id=<%= $domain_id %>">Escape</a>
+                </div>
+            </form>
+
+          </div>
+        </div>
+    </div>
+% }
+
+% unless ($domain_id) {
+    <div class="grid-container">
+        <div class="grid-x grid-padding-x">
+          <div class="medium-6 medium-centered cell">
+
+            <form accept-charset="UTF-8" action="/alias/add/handler" method="get" data-abide novalidate>
+                <h5 class="text-center">Add alias</h5>
+                <label>Alias name
+                    <input type="text" name="alias_name" placeholder="aliasname" required pattern="[_.a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,42}"/>
+                    <span class="form-error">Mandatory, 2 or more letter</span>
+                </label>
+                <label>Domain
+                    <select name="domain_id" required>
+                        <option value=""></option>
+                        % foreach my $rec (@{$u->domain_list}) {
+                            <option value="<%= $rec->{id} %>"><%= $rec->{name} %></option>
+                        % }
+                    </select >
+                </label>
+                <label>Destination list
+                    <input type="text" name="list" placeholder="some@bare.org,foo@bar.com" required pattern="[_.@,a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{5,42}"/>
+                    <span class="form-error">Mandatory, 6 or more letter</span>
+                </label>
+
+                <div class="text-center">
+                    <button type="submit" class="button">Accept</button>
+                    <a class="button" href="/alias/list">Escape</a>
+                </div>
+            </form>
+
+          </div>
+        </div>
+    </div>
+% }
+
+%#EOF

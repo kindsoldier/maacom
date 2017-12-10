@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# $Id$
+#
+# PROVIDE: maacom
+# REQUIRE: LOGIN
+
+. /etc/rc.subr
+
+name="maacom"
+rcvar="maacom_enable"
+
+pidfile="/var/run/maacom"/maacom.pid
+command="/usr/local/sbin/${name}"
+command_args=""
+procname="/usr/local/sbin/${name}"
+command_interpreter="/usr/local/bin/perl"
+
+load_rc_config ${name}
+
+: ${pgagent_enable:="NO"}
+
+run_rc_command "$1"
+#EOF

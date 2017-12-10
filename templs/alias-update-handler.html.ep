@@ -1,0 +1,44 @@
+%#
+%# $Id$
+%#
+% layout 'default';
+% title 'Mail';
+
+% use Mojo::Util qw(dumper trim);
+
+% my $u = $c->app->user;
+
+% my $alias_id = $c->req->param('alias_id') || 0;
+% my $list = $c->req->param('list');
+
+% my $profile = $u->alias_profile($alias_id);
+
+% if ($profile) {
+    % my $domain_id = $profile->{domain_id};
+    % my $domain_name = $profile->{domain_name};
+    % my $address = $profile->{address};
+
+    % $list =~ s/[\s\n]/,/g;
+    % $list =~ s/,,/,/g;
+    % $list =~ s/^,//g;
+    % $list =~ s/,$//g;
+
+    % my $res = $u->alias_update($alias_id, list => $list);
+    % if ($res) {
+            <div class="callout success">Alias <%= $address %> has been updated.</div>
+    % }
+
+    % unless ($res) {
+            <div class="callout alert">Alias <%= $address %> was not updated.</div>
+    % }
+% }
+
+% unless ($profile) {
+        <div class="callout warning">Alias with id <%= $alias_id %> not exist</div>
+% }
+
+%#EOF
+
+
+
+

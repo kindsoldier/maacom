@@ -1,0 +1,32 @@
+%#
+%# $Id$
+%#
+% layout 'default';
+% title 'Mail';
+
+% use Mojo::Util qw(dumper);
+
+% my $u = $c->app->user;
+
+% my $domain_id = $c->req->param('domain_id') || 0;
+% my $profile = $u->domain_profile($domain_id);
+
+% if ($profile) {
+    % my $name = $profile->{name};
+    % my $res = $u->domain_delete($domain_id);
+
+    % if ($res) {
+        <div class="callout success">Domain <%= $name %> has been deleted</div>
+    % }
+
+    % unless ($res) {
+        <div class="callout alert">Domain <%= $name %> was not deleted</div>
+    % }
+% }
+
+% unless ($profile) {
+        <div class="callout warning">Domain with id <%= $domain_id %> not exist</div>
+% }
+
+%#EOF
+

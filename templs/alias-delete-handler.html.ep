@@ -1,0 +1,34 @@
+%#
+%# $Id$
+%#
+% layout 'default';
+% title 'Mail';
+
+% use Mojo::Util qw(dumper);
+
+% my $u = $c->app->user;
+
+% my $alias_id = $c->req->param('alias_id') || 0;
+% my $profile = $u->alias_profile($alias_id);
+
+% if ($profile) {
+    % my $name = $profile->{name};
+    % my $address = $profile->{address};
+
+    % my $res = $u->alias_delete($alias_id);
+
+    % if ($res) {
+        <div class="callout success">Alias <%= $address %> has been deleted</div>
+    % }
+
+    % unless ($res) {
+        <div class="callout alert">Alias <%= $address %> was not deleted</div>
+    % }
+% }
+
+% unless ($profile) {
+        <div class="callout warning">Alias with id <%= $alias_id %> not exist</div>
+% }
+
+%#EOF
+
