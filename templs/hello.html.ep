@@ -1,5 +1,5 @@
 % layout 'default';
-% title 'MAM';
+% title 'Maacom';
 
 % use Mojo::Util qw(dumper html_unescape unquote);
 
