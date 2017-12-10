@@ -5,7 +5,7 @@
 
 % unless ($c->req->param('next')) {
 %   layout 'default';
-%   title 'Mail';
+%   title 'MAM';
     <h5 class="text-center"><%= $t->file %></h5>
     <div class="callout">
         <small><div id="log">

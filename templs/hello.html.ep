@@ -1,5 +1,5 @@
 % layout 'default';
-% title 'Mail';
+% title 'MAM';
 
 % use Mojo::Util qw(dumper html_unescape unquote);
 

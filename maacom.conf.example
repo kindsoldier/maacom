@@ -1,3 +1,10 @@
-{
-"loglevel":"debug"
-}
+#
+# $id$
+#
+loglevel = debug
+dbname = maacom
+dbhost = 127.0.0.1
+dblogin = maacom
+dbpassword = password
+dbengine = postgres
+#EOF
