@@ -1,5 +1,58 @@
 #!@perl@
 
+package aConfig;
+
+use strict;
+use warnings;
+
+sub new {
+    my ($class, $file) = @_;
+    my $self = {
+        file => $file
+    };
+    bless $self, $class;
+    $self;
+}
+
+sub file {
+    my ($self, $name) = @_;
+    return $self->{'file'} unless $name;
+    $self->{'file'} = $name;
+    $self;
+}
+
+sub read {
+    my $self = shift;
+    return undef unless -r $self->file;
+    open my $fh, '<', $self->file;
+    my %res;
+    while (my $line = readline $fh) {
+        chomp $line;
+        $line =~ s/^\s+//g;
+
+        next if $line =~ /^#/;
+        next if $line =~ /^;/;
+        next unless $line =~ /[=:]/;
+
+        $line =~ s/[\"\']//g;
+        my ($key, $rawvalue) = split(/==|=>|[=:]/, $line);
+        next unless $rawvalue and $key;
+
+        my ($value, $comment) = split(/[#;,]/, $rawvalue);
+
+        $key =~ s/^\s+|\s+$//g;
+        $value =~ s/^\s+|\s+$//g;
+
+        $res{$key} = $value;
+    }
+    close $fh;
+    \%res;
+}
+
+1;
+
+
+
 #----------
 #--- DB ---
 #----------
@@ -828,7 +881,12 @@ $app->config(dbengine => 'sqlite3');
 
 if (-r $app->config('conffile')) {
     $app->log->debug("Load configuration from ".$app->config('conffile'));
-    $app->plugin('JSONConfig', { file => $app->config('conffile') });
+#    $app->plugin('JSONConfig', { file => $app->config('conffile') });
+    my $c = aConfig->new($app->config('conffile'));
+    my $hash = $c->read;
+    foreach my $key (keys %$hash) {
+        $app->config($key => $hash->{$key});
+    }
 }
 
 #---------------
