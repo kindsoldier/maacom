@@ -11,11 +11,10 @@
 
 % my $domain_id = $req->param('domain_id');
 
-
-
 % if ($domain_id) {
+    % my $domain_name = $u->domain_profile($domain_id)->{name};
     <h5 class="text-center">
-        Accounts <a href="/user/list?domain_id=<%= $domain_id %>"><i class="fi-refresh"></i></a>
+        Accounts <%= $domain_name %> <a href="/user/list?domain_id=<%= $domain_id %>"><i class="fi-refresh"></i></a>
         <a class="float-right button tiny" href="/user/add/form?domain_id=<%= $domain_id %>">
             <i class="fi-plus"></i>
         </a>

@@ -58,8 +58,9 @@
 % }
 
 % if ($domain_id) {
+    % my $domain_name = $u->domain_profile($domain_id)->{name};
     <h5 class="text-center">
-      Aliases <a href="/alias/list?domain_id=<%= $domain_id %>"><i class="fi-refresh"></i></a>
+      Aliases  <%= $domain_name %> <a href="/alias/list?domain_id=<%= $domain_id %>"><i class="fi-refresh"></i></a>
       <a class="float-right button tiny" href="/alias/add/form?domain_id=<%= $domain_id %>">
         <i class="fi-plus"></i>
       </a>
