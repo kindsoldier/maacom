@@ -328,6 +328,8 @@ sub domain_delete {
     $id;
 }
 
+# --- ALAIS ---
+
 sub alias_exist {
     my ($self, $name, $domain_id) = @_;
     return undef unless $name;
@@ -521,6 +523,70 @@ sub user_delete {
     return undef if $self->user_profile($id);
     $id;
 }
+
+
+# --- FORWARD ---
+
+sub forward_exist {
+    my ($self, $name) = @_;
+    return undef unless $name;
+    my $res = $self->db->exec1("select id from forwards where name = '$name' order by id limit 1");
+    $res->{id};
+}
+
+sub forward_profile {
+    my ($self, $id) = @_;
+    return undef unless $id;
+    my $row = $self->db->exec1("select * from forwards where forwards.id = $id limit 1");
+    $row;
+}
+
+sub forward_nextid {
+    my $self = shift;
+    my $res = $self->db->exec1("select id from forwards order by id desc limit 1");
+    my $id = $res->{id} || 0;
+    $id += 1;
+}
+
+sub forward_add {
+    my ($self, $name) = @_;
+    return undef unless $name;
+    return undef if $self->forward_exist($name);
+    my $next_id = $self->forward_nextid;
+    $self->db->do("insert into forwards (id, name) values ($next_id, '$name')");
+    $self->forward_exist($name);
+}
+
+sub forward_list {
+    my $self = shift;
+    $self->db->exec("select * from forwards order by id");
+}
+
+sub forward_update {
+    my ($self, $id, %args) = @_;
+    return undef unless $id;
+    my $prof = $self->forward_profile($id);
+    return undef unless $prof;
+
+    my $name = $args{name} || $prof->{name};
+
+    $self->db->do("update forwards set name = '$name' where id = $id");
+    my $res = $self->forward_profile($id);
+    return undef unless $res->{name} eq $name;
+    $id;
+}
+
+
+sub forward_delete {
+    my ($self, $id) = @_;
+    return undef unless $id;
+#    return $id unless $self->forward_profile($id);
+    $self->db->do("delete from forwards where id = $id");
+    return undef if $self->forward_profile($id);
+    $id;
+}
+
+
 
 1;
 
@@ -819,6 +885,42 @@ sub mxlog {
     $self->render(template => 'mxlog');
 }
 
+# --- FORWARD ---
+
+sub forward_list {
+    my $self = shift;
+    $self->render(template => 'forward-list');
+}
+sub forward_add_form {
+    my $self = shift;
+    $self->render(template => 'forward-add-form');
+}
+sub forward_add_handler {
+    my $self = shift;
+    $self->render(template => 'forward-add-handler');
+}
+sub forward_update_form {
+    my $self = shift; 
+    $self->render(template => 'forward-update-form');
+}
+
+sub forward_update_handler {
+    my $self = shift;
+    $self->render(template => 'forward-update-handler');
+}
+
+sub forward_delete_form {
+    my $self = shift;
+    $self->render(template => 'forward-delete-form');
+}
+
+sub forward_delete_handler {
+    my $self = shift;
+    $self->render(template => 'forward-delete-handler');
+}
+
+
+
 1;
 
 #-----------
@@ -970,6 +1072,14 @@ $r->any('/alias/rename/form')->over('auth')->to('controller#alias_rename_form' )
 $r->any('/alias/rename/handler')->over('auth')->to('controller#alias_rename_handler' );
 
 $r->any('/mxlog')->over('auth')->to('controller#mxlog' );
+
+$r->any('/forward/list')->over('auth')->to('controller#forward_list' );
+$r->any('/forward/add/form')->over('auth')->to('controller#forward_add_form' );
+$r->any('/forward/add/handler')->over('auth')->to('controller#forward_add_handler' );
+$r->any('/forward/update/form')->over('auth')->to('controller#forward_update_form' );
+$r->any('/forward/update/handler')->over('auth')->to('controller#forward_update_handler' );
+$r->any('/forward/delete/form')->over('auth')->to('controller#forward_delete_form' );
+$r->any('/forward/delete/handler')->over('auth')->to('controller#forward_delete_handler' );
 
 
 #----------------

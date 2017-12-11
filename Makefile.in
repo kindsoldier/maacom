@@ -352,6 +352,14 @@ nobase_dist_pkgdata_DATA = \
 	templs/alias-rename-form.html.ep \
 	templs/alias-rename-handler.html.ep \
 	\
+	templs/forward-list.html.ep \
+	templs/forward-add-form.html.ep \
+	templs/forward-add-handler.html.ep \
+	templs/forward-update-form.html.ep \
+	templs/forward-update-handler.html.ep \
+	templs/forward-delete-form.html.ep \
+	templs/forward-delete-handler.html.ep \
+	\
 	templs/exception.development.html.ep \
 	templs/exception.production.html.ep \
 	templs/hello.html.ep \

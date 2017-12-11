@@ -1,0 +1,30 @@
+%#
+%# $Id$
+%#
+% layout 'default';
+% title 'Maacom';
+
+% use Mojo::Util qw(dumper);
+
+% my $u = $c->app->user;
+
+<div class="grid-container">
+    <div class="grid-x grid-padding-x">
+      <div class="medium-6 medium-centered cell">
+
+        <form accept-charset="UTF-8" action="/forward/add/handler" method="get" data-abide novalidate>
+            <h5 class="text-center">Add forwarded domain</h5>
+            <label>Domain name
+                <input type="text" name="forward_name" placeholder="domain.org" required pattern="[_.-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{5,42}"/>
+                <span class="form-error">Mandatory, 5 or more letter</span>
+            </label>
+            <div class="text-center">
+                <button type="submit" class="button">Accept</button>
+                <a class="button" href="/forward/list">Escape</a>
+            </div>
+        </form>
+
+      </div>
+    </div>
+</div>
+%#EOF

@@ -1,0 +1,32 @@
+%#
+%# $Id$
+%#
+% layout 'default';
+% title 'Maacom';
+
+% use Mojo::Util qw(dumper);
+
+% my $u = $c->app->user;
+% my $name = $c->req->param('forward_name');
+% my $id = $u->forward_exist($name);
+
+% if ($id) {
+    <div class="callout warning">Domain <%= $name %> already exists</div>
+% }
+
+% unless ($id) {
+    % my $res = $u->forward_add($name);
+    % if ($res) {
+        <div class="callout success">Domain <%= $name %> has been added.</div>
+    % }
+
+    % unless ($res) {
+        <div class="callout alert">Domain <%= $name %> was not added.</div>
+    % }
+% }
+
+%#EOF
+
+
+
+

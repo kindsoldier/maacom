@@ -20,4 +20,9 @@ CREATE TABLE aliases (
     domain_id int,
     list text
 );
+CREATE TABLE forwards (
+    id int unique NOT NULL PRIMARY KEY,
+    name text unique
+);
+
 COMMIT;
