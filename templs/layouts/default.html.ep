@@ -28,12 +28,18 @@
             <div class="top-bar-left">
                 <ul class="dropdown menu" data-dropdown-menu>
                     <li class="menu-text">Mail</li>
-                    <li><a href="/domain/list">Domain</a></li>
-                    <li><a href="/user/list">User</a></li>
-                    <li><a href="/alias/list">Alias</a></li>
-                    <li><a href="/forwarded/list">Forwarded</a></li>
-                    <li><a href="/unwanted/list">Unwanted</a></li>
-                    <li><a href="/trusted/list">Trusted</a></li>
+                    <li><a href="/domain/list">Domains</a></li>
+                    <li>
+                        <a href="#">Lists</a>
+                        <ul class="menu">
+                            <li><a href="/domain/list">Domains</a></li>
+                            <li><a href="/user/list">Users</a></li>
+                            <li><a href="/alias/list">Aliases</a></li>
+                            <li><a href="/forwarded/list">Forwarded</a></li>
+                            <li><a href="/unwanted/list">Unwanted</a></li>
+                            <li><a href="/trusted/list">Trusted</a></li>
+                        </ul>
+                    </li>
                     <li><a href="/mxlog">Log</a></li>
                     <li><a href="/logout"><i class="fi-arrow-right"></i></a></li>
                 </ul>
