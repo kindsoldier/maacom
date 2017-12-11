@@ -1,0 +1,32 @@
+%#
+%# $Id$
+%#
+% layout 'default';
+% title 'Maacom';
+
+% use Mojo::Util qw(dumper);
+
+% my $u = $c->app->user;
+
+% my $unwanted_id = $c->req->param('unwanted_id') || 0;
+% my $profile = $u->unwanted_profile($unwanted_id);
+
+% if ($profile) {
+    % my $name = $profile->{name};
+    % my $res = $u->unwanted_delete($unwanted_id);
+
+    % if ($res) {
+        <div class="callout success">Host <%= $name %> has been deleted</div>
+    % }
+
+    % unless ($res) {
+        <div class="callout alert">Host <%= $name %> was not deleted</div>
+    % }
+% }
+
+% unless ($profile) {
+        <div class="callout warning">Host with id <%= $unwanted_id %> not exist</div>
+% }
+
+%#EOF
+

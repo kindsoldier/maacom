@@ -1,0 +1,32 @@
+%#
+%# $Id$
+%#
+% layout 'default';
+% title 'Maacom';
+
+% use Mojo::Util qw(dumper);
+
+% my $u = $c->app->user;
+% my $name = $c->req->param('trusted_name');
+% my $id = $u->trusted_exist($name);
+
+% if ($id) {
+    <div class="callout warning">Host <%= $name %> already exists</div>
+% }
+
+% unless ($id) {
+    % my $res = $u->trusted_add($name);
+    % if ($res) {
+        <div class="callout success">Host <%= $name %> has been added.</div>
+    % }
+
+    % unless ($res) {
+        <div class="callout alert">Host <%= $name %> was not added.</div>
+    % }
+% }
+
+%#EOF
+
+
+
+

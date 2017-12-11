@@ -1,0 +1,74 @@
+%#
+%# $Id$
+%#
+% layout 'default';
+% title 'Maacom';
+
+% use Mojo::Util qw(dumper);
+
+% my $u = $c->app->user;
+
+<h5 class="text-center">
+  Hosts <a href="/unwanted/list"><i class="fi-refresh"></i></a>
+  <a class="float-right button tiny" href="/unwanted/add/form">
+    <i class="fi-plus"></i>
+  </a>
+</h5>
+
+
+% my $list = $u->unwanted_list;
+
+% unless ($list) {
+    <div class="callout alert">
+        Cannot list hosts. May be wrong database?
+    </div>
+% }
+
+<table class="hover" id="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>host</th>
+            <th><i class="fi-pencil"></i></th>
+            <th><i class="fi-trash"></i></th>
+        </tr>
+    </thead>
+    <tbody>
+% my $n = 0;
+
+% if ($list) {
+    % foreach my $row (@$list) {
+        % $n += 1;
+        % my $id = $row->{id};
+        % my $name = $row->{name};
+        % my $size = $row->{size};
+            <tr>
+                <td><%= $n %></td>
+                <td><%= $name %></td>
+                <td><a href="/unwanted/update/form?unwanted_id=<%= $id %>"><i class="fi-pencil"></i></a></td>
+                <td><a href="/unwanted/delete/form?unwanted_id=<%= $id %>"><i class="fi-trash"></i></a></td>
+            </tr>
+    % }
+% }
+    </tbody>
+</table>
+
+<script>
+$.extend(true, $.fn.dataTable.defaults, {
+    "searching": true,
+    "ordering": true,
+    "language": {
+        "search": "",
+        "lengthMenu": "_MENU_",
+        "info": "_START_-_END_ of _TOTAL_",
+        "infoEmpty": "",
+    },
+
+} );
+
+$(document).ready(function() {
+    $('#table').DataTable();
+});
+</script>
+
+%# EOF

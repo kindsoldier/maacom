@@ -1,0 +1,39 @@
+%#
+%# $Id$
+%#
+% layout 'default';
+% title 'Maacom';
+
+% use Mojo::Util qw(dumper);
+
+% my $u = $c->app->user;
+
+% my $forwarded_id = $c->req->param('forwarded_id') || 0;
+% my $profile = $u->forwarded_profile($forwarded_id);
+
+% if ($profile) {
+    % my $forwarded_name = $profile->{name};
+
+    <div class="grid-container">
+        <div class="grid-x grid-padding-x">
+          <div class="medium-6 medium-centered cell">
+
+            <form accept-charset="UTF-8" action="/forwarded/delete/handler" method="get" data-abide novalidate>
+                <h5 class="text-center">Delete domain <%= $forwarded_name %></h5>
+                <input type="hidden" name="forwarded_id" value="<%= $forwarded_id %>"/>
+                <div class="text-center">
+                    <button type="submit" class="button">Accept</button>
+                    <a class="button" href="/forwarded/list">Escape</a>
+                </div>
+            </form>
+
+          </div>
+        </div>
+    </div>
+% }
+
+% unless ($profile) {
+        <div class="callout warning">Domain with id <%= $forwarded_id %> not exist</div>
+% }
+
+%#EOF

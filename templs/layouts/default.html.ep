@@ -31,7 +31,9 @@
                     <li><a href="/domain/list">Domain</a></li>
                     <li><a href="/user/list">User</a></li>
                     <li><a href="/alias/list">Alias</a></li>
-                    <li><a href="/forward/list">Forward</a></li>
+                    <li><a href="/forwarded/list">Forwarded</a></li>
+                    <li><a href="/unwanted/list">Unwanted</a></li>
+                    <li><a href="/trusted/list">Trusted</a></li>
                     <li><a href="/mxlog">Log</a></li>
                     <li><a href="/logout"><i class="fi-arrow-right"></i></a></li>
                 </ul>

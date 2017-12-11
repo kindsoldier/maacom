@@ -89,13 +89,29 @@ nobase_dist_pkgdata_DATA = \
 	templs/alias-rename-form.html.ep \
 	templs/alias-rename-handler.html.ep \
 	\
-	templs/forward-list.html.ep \
-	templs/forward-add-form.html.ep \
-	templs/forward-add-handler.html.ep \
-	templs/forward-update-form.html.ep \
-	templs/forward-update-handler.html.ep \
-	templs/forward-delete-form.html.ep \
-	templs/forward-delete-handler.html.ep \
+	templs/forwarded-list.html.ep \
+	templs/forwarded-add-form.html.ep \
+	templs/forwarded-add-handler.html.ep \
+	templs/forwarded-update-form.html.ep \
+	templs/forwarded-update-handler.html.ep \
+	templs/forwarded-delete-form.html.ep \
+	templs/forwarded-delete-handler.html.ep \
+	\
+	templs/unwanted-list.html.ep \
+	templs/unwanted-add-form.html.ep \
+	templs/unwanted-add-handler.html.ep \
+	templs/unwanted-update-form.html.ep \
+	templs/unwanted-update-handler.html.ep \
+	templs/unwanted-delete-form.html.ep \
+	templs/unwanted-delete-handler.html.ep \
+	\
+	templs/trusted-list.html.ep \
+	templs/trusted-add-form.html.ep \
+	templs/trusted-add-handler.html.ep \
+	templs/trusted-update-form.html.ep \
+	templs/trusted-update-handler.html.ep \
+	templs/trusted-delete-form.html.ep \
+	templs/trusted-delete-handler.html.ep \
 	\
 	templs/exception.development.html.ep \
 	templs/exception.production.html.ep \

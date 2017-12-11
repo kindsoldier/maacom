@@ -1,0 +1,39 @@
+%#
+%# $Id$
+%#
+% layout 'default';
+% title 'Maacom';
+
+% use Mojo::Util qw(dumper);
+
+% my $u = $c->app->user;
+
+% my $trusted_id = $c->req->param('trusted_id') || 0;
+% my $profile = $u->trusted_profile($trusted_id);
+
+% if ($profile) {
+    % my $trusted_name = $profile->{name};
+
+    <div class="grid-container">
+        <div class="grid-x grid-padding-x">
+          <div class="medium-6 medium-centered cell">
+
+            <form accept-charset="UTF-8" action="/trusted/delete/handler" method="get" data-abide novalidate>
+                <h5 class="text-center">Delete host <%= $trusted_name %></h5>
+                <input type="hidden" name="trusted_id" value="<%= $trusted_id %>"/>
+                <div class="text-center">
+                    <button type="submit" class="button">Accept</button>
+                    <a class="button" href="/trusted/list">Escape</a>
+                </div>
+            </form>
+
+          </div>
+        </div>
+    </div>
+% }
+
+% unless ($profile) {
+        <div class="callout warning">Host with id <%= $trusted_id %> not exist</div>
+% }
+
+%#EOF

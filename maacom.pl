@@ -525,64 +525,188 @@ sub user_delete {
 
 # --- FORWARD ---
 
-sub forward_exist {
+sub forwarded_exist {
     my ($self, $name) = @_;
     return undef unless $name;
-    my $res = $self->db->exec1("select id from forwards where name = '$name' order by id limit 1");
+    my $res = $self->db->exec1("select id from forwarded where name = '$name' order by id limit 1");
     $res->{id};
 }
 
-sub forward_profile {
+sub forwarded_profile {
     my ($self, $id) = @_;
     return undef unless $id;
-    my $row = $self->db->exec1("select * from forwards where forwards.id = $id limit 1");
+    my $row = $self->db->exec1("select * from forwarded where forwarded.id = $id limit 1");
     $row;
 }
 
-sub forward_nextid {
+sub forwarded_nextid {
     my $self = shift;
-    my $res = $self->db->exec1("select id from forwards order by id desc limit 1");
+    my $res = $self->db->exec1("select id from forwarded order by id desc limit 1");
     my $id = $res->{id} || 0;
     $id += 1;
 }
 
-sub forward_add {
+sub forwarded_add {
     my ($self, $name) = @_;
     return undef unless $name;
-    return undef if $self->forward_exist($name);
-    my $next_id = $self->forward_nextid;
-    $self->db->do("insert into forwards (id, name) values ($next_id, '$name')");
-    $self->forward_exist($name);
+    return undef if $self->forwarded_exist($name);
+    my $next_id = $self->forwarded_nextid;
+    $self->db->do("insert into forwarded (id, name) values ($next_id, '$name')");
+    $self->forwarded_exist($name);
 }
 
-sub forward_list {
+sub forwarded_list {
     my $self = shift;
-    $self->db->exec("select * from forwards order by id");
+    $self->db->exec("select * from forwarded order by id");
 }
 
-sub forward_update {
+sub forwarded_update {
     my ($self, $id, %args) = @_;
     return undef unless $id;
-    my $prof = $self->forward_profile($id);
+    my $prof = $self->forwarded_profile($id);
     return undef unless $prof;
 
     my $name = $args{name} || $prof->{name};
 
-    $self->db->do("update forwards set name = '$name' where id = $id");
-    my $res = $self->forward_profile($id);
+    $self->db->do("update forwarded set name = '$name' where id = $id");
+    my $res = $self->forwarded_profile($id);
     return undef unless $res->{name} eq $name;
     $id;
 }
 
 
-sub forward_delete {
+sub forwarded_delete {
     my ($self, $id) = @_;
     return undef unless $id;
-#    return $id unless $self->forward_profile($id);
-    $self->db->do("delete from forwards where id = $id");
-    return undef if $self->forward_profile($id);
+#    return $id unless $self->forwarded_profile($id);
+    $self->db->do("delete from forwarded where id = $id");
+    return undef if $self->forwarded_profile($id);
     $id;
 }
+
+
+# --- UNWANTED ---
+
+sub unwanted_exist {
+    my ($self, $name) = @_;
+    return undef unless $name;
+    my $res = $self->db->exec1("select id from unwanted where name = '$name' order by id limit 1");
+    $res->{id};
+}
+
+sub unwanted_profile {
+    my ($self, $id) = @_;
+    return undef unless $id;
+    my $row = $self->db->exec1("select * from unwanted where unwanted.id = $id limit 1");
+    $row;
+}
+
+sub unwanted_nextid {
+    my $self = shift;
+    my $res = $self->db->exec1("select id from unwanted order by id desc limit 1");
+    my $id = $res->{id} || 0;
+    $id += 1;
+}
+
+sub unwanted_add {
+    my ($self, $name) = @_;
+    return undef unless $name;
+    return undef if $self->unwanted_exist($name);
+    my $next_id = $self->unwanted_nextid;
+    $self->db->do("insert into unwanted (id, name) values ($next_id, '$name')");
+    $self->unwanted_exist($name);
+}
+
+sub unwanted_list {
+    my $self = shift;
+    $self->db->exec("select * from unwanted order by id");
+}
+
+sub unwanted_update {
+    my ($self, $id, %args) = @_;
+    return undef unless $id;
+    my $prof = $self->unwanted_profile($id);
+    return undef unless $prof;
+
+    my $name = $args{name} || $prof->{name};
+
+    $self->db->do("update unwanted set name = '$name' where id = $id");
+    my $res = $self->unwanted_profile($id);
+    return undef unless $res->{name} eq $name;
+    $id;
+}
+
+
+sub unwanted_delete {
+    my ($self, $id) = @_;
+    return undef unless $id;
+#    return $id unless $self->unwanted_profile($id);
+    $self->db->do("delete from unwanted where id = $id");
+    return undef if $self->unwanted_profile($id);
+    $id;
+}
+
+# --- TRUSTED ---
+
+sub trusted_exist {
+    my ($self, $name) = @_;
+    return undef unless $name;
+    my $res = $self->db->exec1("select id from trusted where name = '$name' order by id limit 1");
+    $res->{id};
+}
+
+sub trusted_profile {
+    my ($self, $id) = @_;
+    return undef unless $id;
+    my $row = $self->db->exec1("select * from trusted where trusted.id = $id limit 1");
+    $row;
+}
+
+sub trusted_nextid {
+    my $self = shift;
+    my $res = $self->db->exec1("select id from trusted order by id desc limit 1");
+    my $id = $res->{id} || 0;
+    $id += 1;
+}
+
+sub trusted_add {
+    my ($self, $name) = @_;
+    return undef unless $name;
+    return undef if $self->trusted_exist($name);
+    my $next_id = $self->trusted_nextid;
+    $self->db->do("insert into trusted (id, name) values ($next_id, '$name')");
+    $self->trusted_exist($name);
+}
+
+sub trusted_list {
+    my $self = shift;
+    $self->db->exec("select * from trusted order by id");
+}
+
+sub trusted_update {
+    my ($self, $id, %args) = @_;
+    return undef unless $id;
+    my $prof = $self->trusted_profile($id);
+    return undef unless $prof;
+
+    my $name = $args{name} || $prof->{name};
+
+    $self->db->do("update trusted set name = '$name' where id = $id");
+    my $res = $self->trusted_profile($id);
+    return undef unless $res->{name} eq $name;
+    $id;
+}
+
+
+sub trusted_delete {
+    my ($self, $id) = @_;
+    return undef unless $id;
+#    return $id unless $self->trusted_profile($id);
+    $self->db->do("delete from trusted where id = $id");
+    return undef if $self->trusted_profile($id);
+    $id;
+}
+
 
 
 
@@ -885,39 +1009,105 @@ sub mxlog {
 
 # --- FORWARD ---
 
-sub forward_list {
+sub forwarded_list {
     my $self = shift;
-    $self->render(template => 'forward-list');
+    $self->render(template => 'forwarded-list');
 }
-sub forward_add_form {
+sub forwarded_add_form {
     my $self = shift;
-    $self->render(template => 'forward-add-form');
+    $self->render(template => 'forwarded-add-form');
 }
-sub forward_add_handler {
+sub forwarded_add_handler {
     my $self = shift;
-    $self->render(template => 'forward-add-handler');
+    $self->render(template => 'forwarded-add-handler');
 }
-sub forward_update_form {
+sub forwarded_update_form {
     my $self = shift; 
-    $self->render(template => 'forward-update-form');
+    $self->render(template => 'forwarded-update-form');
 }
 
-sub forward_update_handler {
+sub forwarded_update_handler {
     my $self = shift;
-    $self->render(template => 'forward-update-handler');
+    $self->render(template => 'forwarded-update-handler');
 }
 
-sub forward_delete_form {
+sub forwarded_delete_form {
     my $self = shift;
-    $self->render(template => 'forward-delete-form');
+    $self->render(template => 'forwarded-delete-form');
 }
 
-sub forward_delete_handler {
+sub forwarded_delete_handler {
     my $self = shift;
-    $self->render(template => 'forward-delete-handler');
+    $self->render(template => 'forwarded-delete-handler');
 }
 
+# --- UNWANTED ---
 
+sub unwanted_list {
+    my $self = shift;
+    $self->render(template => 'unwanted-list');
+}
+sub unwanted_add_form {
+    my $self = shift;
+    $self->render(template => 'unwanted-add-form');
+}
+sub unwanted_add_handler {
+    my $self = shift;
+    $self->render(template => 'unwanted-add-handler');
+}
+sub unwanted_update_form {
+    my $self = shift; 
+    $self->render(template => 'unwanted-update-form');
+}
+
+sub unwanted_update_handler {
+    my $self = shift;
+    $self->render(template => 'unwanted-update-handler');
+}
+
+sub unwanted_delete_form {
+    my $self = shift;
+    $self->render(template => 'unwanted-delete-form');
+}
+
+sub unwanted_delete_handler {
+    my $self = shift;
+    $self->render(template => 'unwanted-delete-handler');
+}
+
+# --- TRUSTED ---
+
+sub trusted_list {
+    my $self = shift;
+    $self->render(template => 'trusted-list');
+}
+sub trusted_add_form {
+    my $self = shift;
+    $self->render(template => 'trusted-add-form');
+}
+sub trusted_add_handler {
+    my $self = shift;
+    $self->render(template => 'trusted-add-handler');
+}
+sub trusted_update_form {
+    my $self = shift; 
+    $self->render(template => 'trusted-update-form');
+}
+
+sub trusted_update_handler {
+    my $self = shift;
+    $self->render(template => 'trusted-update-handler');
+}
+
+sub trusted_delete_form {
+    my $self = shift;
+    $self->render(template => 'trusted-delete-form');
+}
+
+sub trusted_delete_handler {
+    my $self = shift;
+    $self->render(template => 'trusted-delete-handler');
+}
 
 1;
 
@@ -1071,13 +1261,30 @@ $r->any('/alias/rename/handler')->over('auth')->to('controller#alias_rename_hand
 
 $r->any('/mxlog')->over('auth')->to('controller#mxlog' );
 
-$r->any('/forward/list')->over('auth')->to('controller#forward_list' );
-$r->any('/forward/add/form')->over('auth')->to('controller#forward_add_form' );
-$r->any('/forward/add/handler')->over('auth')->to('controller#forward_add_handler' );
-$r->any('/forward/update/form')->over('auth')->to('controller#forward_update_form' );
-$r->any('/forward/update/handler')->over('auth')->to('controller#forward_update_handler' );
-$r->any('/forward/delete/form')->over('auth')->to('controller#forward_delete_form' );
-$r->any('/forward/delete/handler')->over('auth')->to('controller#forward_delete_handler' );
+$r->any('/forwarded/list')->over('auth')->to('controller#forwarded_list' );
+$r->any('/forwarded/add/form')->over('auth')->to('controller#forwarded_add_form' );
+$r->any('/forwarded/add/handler')->over('auth')->to('controller#forwarded_add_handler' );
+$r->any('/forwarded/update/form')->over('auth')->to('controller#forwarded_update_form' );
+$r->any('/forwarded/update/handler')->over('auth')->to('controller#forwarded_update_handler' );
+$r->any('/forwarded/delete/form')->over('auth')->to('controller#forwarded_delete_form' );
+$r->any('/forwarded/delete/handler')->over('auth')->to('controller#forwarded_delete_handler' );
+
+$r->any('/unwanted/list')->over('auth')->to('controller#unwanted_list' );
+$r->any('/unwanted/add/form')->over('auth')->to('controller#unwanted_add_form' );
+$r->any('/unwanted/add/handler')->over('auth')->to('controller#unwanted_add_handler' );
+$r->any('/unwanted/update/form')->over('auth')->to('controller#unwanted_update_form' );
+$r->any('/unwanted/update/handler')->over('auth')->to('controller#unwanted_update_handler' );
+$r->any('/unwanted/delete/form')->over('auth')->to('controller#unwanted_delete_form' );
+$r->any('/unwanted/delete/handler')->over('auth')->to('controller#unwanted_delete_handler' );
+
+
+$r->any('/trusted/list')->over('auth')->to('controller#trusted_list' );
+$r->any('/trusted/add/form')->over('auth')->to('controller#trusted_add_form' );
+$r->any('/trusted/add/handler')->over('auth')->to('controller#trusted_add_handler' );
+$r->any('/trusted/update/form')->over('auth')->to('controller#trusted_update_form' );
+$r->any('/trusted/update/handler')->over('auth')->to('controller#trusted_update_handler' );
+$r->any('/trusted/delete/form')->over('auth')->to('controller#trusted_delete_form' );
+$r->any('/trusted/delete/handler')->over('auth')->to('controller#trusted_delete_handler' );
 
 
 #----------------

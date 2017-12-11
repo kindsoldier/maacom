@@ -1,0 +1,41 @@
+%#
+%# $Id$
+%#
+% layout 'default';
+% title 'Maacom';
+
+% use Mojo::Util qw(dumper);
+
+% my $u = $c->app->user;
+
+% my $name = $c->req->param('trusted_name');
+% my $trusted_id = $c->req->param('trusted_id') || 0;
+% my $profile = $u->trusted_profile($trusted_id);
+
+% if ($profile) {
+    % my $cid = $u->trusted_exist($name);
+    % if ($cid) {
+        <div class="callout warning">Host <%= $name %> already exists</div>
+    % }
+
+    % unless ($cid) {
+        % my $res = $u->trusted_update($trusted_id, name => $name);
+        % if ($res) {
+            <div class="callout success">Host <%= $name %> has been updated.</div>
+        % }
+
+        % unless ($res) {
+            <div class="callout alert">Host <%= $name %> was not updated.</div>
+        % }
+    % }
+% }
+
+% unless ($profile) {
+        <div class="callout warning">Host with id <%= $trusted_id %> not exist</div>
+% }
+
+%#EOF
+
+
+
+
