@@ -1,4 +1,4 @@
-AC_INIT(maacom.pl,0.01)
+AC_INIT(maacom.pl,0.02)
 AM_INIT_AUTOMAKE
 AC_PREFIX_DEFAULT(/usr/local)
 

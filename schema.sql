@@ -24,7 +24,6 @@ CREATE TABLE forwarded (
     id int unique NOT NULL PRIMARY KEY,
     name text unique
 );
-
 CREATE TABLE unwanted (
     id int unique NOT NULL PRIMARY KEY,
     name text unique
@@ -33,6 +32,4 @@ CREATE TABLE trusted (
     id int unique NOT NULL PRIMARY KEY,
     name text unique
 );
-
-
 COMMIT;

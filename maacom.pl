@@ -707,9 +707,6 @@ sub trusted_delete {
     $id;
 }
 
-
-
-
 1;
 
 #--------------
@@ -725,19 +722,32 @@ use Cwd qw(cwd getcwd chdir);
 use Mojo::Util qw(dumper);
 
 sub new {
-    my $class = shift;
-    my $self = {};
+    my ($class, $user, $group)  = @_;
+    my $self = {
+        user => $user,
+        group => $group
+    };
     bless $self, $class;
     return $self;
 }
 
 sub fork {
     my $self = shift;
+
     my $pid = fork;
     if ($pid > 0) {
         exit;
     }
     chdir("/");
+
+    my $uid = getpwnam($self->{user}) if $self->{user};
+    my $gid = getgrnam($self->{group}) if $self->{group};
+
+    print $uid, $gid,"\n";
+
+    setuid($uid) if $uid;
+    setgid($gid) if $gid;
+
     open(my $stdout, '>&', STDOUT); 
     open(my $stderr, '>&', STDERR);
     open(STDOUT, '>>', '/dev/null');
@@ -1169,6 +1179,9 @@ $app->config(dblogin => '');
 $app->config(dbpassword => '');
 $app->config(dbengine => 'sqlite3');
 
+$app->config(group => '@app_group@');
+$app->config(user => '@app_user@');
+
 if (-r $app->config('conffile')) {
     $app->log->debug("Load configuration from ".$app->config('conffile'));
 #    $app->plugin('JSONConfig', { file => $app->config('conffile') });
@@ -1317,8 +1330,6 @@ $server->listen(\@listen);
 $server->heartbeat_interval(3);
 $server->heartbeat_timeout(60);
 
-my $d = Daemon->new;
-$d->fork;
 
 $server->pid_file($app->config('pidfile'));
 
@@ -1326,6 +1337,14 @@ $app->log(Mojo::Log->new(
                 path => $app->config('logfile'),
                 level => $app->config('loglevel')
 ));
+
+
+my $user = $app->config('user');
+my $group = $app->config('group');
+my $d = Daemon->new($user, $group);
+$d->fork;
+
+
 
 $app->hook(before_dispatch => sub {
         my $c = shift;
