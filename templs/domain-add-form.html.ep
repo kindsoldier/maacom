@@ -12,7 +12,7 @@
     <div class="grid-x grid-padding-x">
       <div class="medium-6 medium-centered cell">
 
-        <form accept-charset="UTF-8" action="/domain/add/handler" method="get" data-abide novalidate>
+        <form accept-charset="UTF-8" action="/domain/add/handler" method="post" data-abide novalidate>
             <h5 class="text-center">Add domain</h5>
             <label>Domain name
                 <input type="text" name="domain_name" placeholder="domain.org" required pattern="[_.-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{5,42}"/>

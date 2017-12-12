@@ -18,7 +18,7 @@
         <div class="grid-x grid-padding-x">
           <div class="medium-6 medium-centered cell">
 
-            <form accept-charset="UTF-8" action="/domain/delete/handler" method="get" data-abide novalidate>
+            <form accept-charset="UTF-8" action="/domain/delete/handler" method="post" data-abide novalidate>
                 <h5 class="text-center">Delete domain <%= $domain_name %></h5>
                 <input type="hidden" name="domain_id" value="<%= $domain_id %>"/>
                 <div class="text-center">

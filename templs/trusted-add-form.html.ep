@@ -12,7 +12,7 @@
     <div class="grid-x grid-padding-x">
       <div class="medium-6 medium-centered cell">
 
-        <form accept-charset="UTF-8" action="/trusted/add/handler" method="get" data-abide novalidate>
+        <form accept-charset="UTF-8" action="/trusted/add/handler" method="post" data-abide novalidate>
             <h5 class="text-center">Add trusted host</h5>
             <label>Host name
                 <input type="text" name="trusted_name" placeholder="host.org" required pattern="[_.-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{5,42}"/>

@@ -743,8 +743,6 @@ sub fork {
     my $uid = getpwnam($self->{user}) if $self->{user};
     my $gid = getgrnam($self->{group}) if $self->{group};
 
-    print $uid, $gid,"\n";
-
     setuid($uid) if $uid;
     setgid($gid) if $gid;
 

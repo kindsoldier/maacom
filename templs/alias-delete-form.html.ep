@@ -21,7 +21,7 @@
         <div class="grid-x grid-padding-x">
           <div class="medium-6 medium-centered cell">
 
-            <form accept-charset="UTF-8" action="/alias/delete/handler" method="get" data-abide novalidate>
+            <form accept-charset="UTF-8" action="/alias/delete/handler" method="post" data-abide novalidate>
                 <h5 class="text-center">Delete alias <%= $address %></h5>
                 <input type="hidden" name="alias_id" value="<%= $alias_id %>"/>
                 <div class="text-center">

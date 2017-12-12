@@ -22,7 +22,7 @@
         <div class="grid-x grid-padding-x">
           <div class="medium-6 medium-centered cell">
 
-            <form accept-charset="UTF-8" action="/user/rename/handler" method="get" data-abide novalidate>
+            <form accept-charset="UTF-8" action="/user/rename/handler" method="post" data-abide novalidate>
                 <h5 class="text-center">Rename user <%= $address %></h5>
                 <input type="hidden" name="user_id" value="<%= $user_id %>"/>
                 <label>Username

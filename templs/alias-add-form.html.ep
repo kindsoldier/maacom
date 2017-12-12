@@ -17,7 +17,7 @@
         <div class="grid-x grid-padding-x">
           <div class="medium-6 medium-centered cell">
 
-            <form accept-charset="UTF-8" action="/alias/add/handler" method="get" data-abide novalidate>
+            <form accept-charset="UTF-8" action="/alias/add/handler" method="post" data-abide novalidate>
                 <h5 class="text-center">Add alias to domain <%= $domain_name %></h5>
                 <input type="hidden" name="domain_id" value="<%= $domain_id %>"/>
                 <label>Alias name
@@ -44,7 +44,7 @@
         <div class="grid-x grid-padding-x">
           <div class="medium-6 medium-centered cell">
 
-            <form accept-charset="UTF-8" action="/alias/add/handler" method="get" data-abide novalidate>
+            <form accept-charset="UTF-8" action="/alias/add/handler" method="post" data-abide novalidate>
                 <h5 class="text-center">Add alias</h5>
                 <label>Alias name
                     <input type="text" name="alias_name" placeholder="aliasname" required pattern="[_.a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,42}"/>
