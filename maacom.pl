@@ -467,10 +467,11 @@ sub user_nextid {
 }
 
 sub user_add {
-    my ($self, $name, $password, $domain_id) = @_;
+    my ($self, $name, $password, $domain_id, $quota) = @_;
     return undef unless $name;
     return undef unless $password;
     return undef unless $domain_id;
+    $quota ||= 1024*1024*1024*10;
 
     return undef if $self->user_exist($name, $domain_id);
     return undef unless $self->domain_profile($domain_id);
@@ -478,8 +479,8 @@ sub user_add {
     my $salt = substr(sha512_base64(sprintf("%X", rand(2**31-1))), 4, 16);
     my $hash = crypt($password,'$6$'.$salt.'$');
 
-    $self->db->do("insert into users (id, name, password, domain_id, hash) 
-                    values ($next_id, '$name', '$password', $domain_id, '$hash')");
+    $self->db->do("insert into users (id, name, password, domain_id, hash, $quota)
+                    values ($next_id, '$name', '$password', $domain_id, '$hash', $quota)");
     $self->user_exist($name, $domain_id);
 }
 
@@ -1340,9 +1341,7 @@ $app->log(Mojo::Log->new(
 my $user = $app->config('user');
 my $group = $app->config('group');
 my $d = Daemon->new($user, $group);
-$d->fork;
-
-
+#$d->fork;
 
 $app->hook(before_dispatch => sub {
         my $c = shift;

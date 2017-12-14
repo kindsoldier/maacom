@@ -12,7 +12,7 @@ CREATE TABLE users (
     password text,
     hash text,
     size int DEFAULT 0,
-    quota int  DEFAULT 0
+    quota int DEFAULT 10737418240
 );
 CREATE TABLE aliases (
     id int unique NOT NULL PRIMARY KEY,
