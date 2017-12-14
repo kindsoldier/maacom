@@ -22,5 +22,5 @@ Password file in the same Apache htpasswd format.
 The application is ready to use, the installation procedure takes 10-15 minutes.
 The procedure is described on the project page http://wiki.unix7.org/perl/maacom
 
-![](http://wiki.unix7.org/_media/perl/screenshot-2017-12-11-21-39-52.png?w=420)
+![Screen example](http://wiki.unix7.org/_media/perl/screenshot-2017-12-11-21-39-52.png?w=420&foo=.png)
 
