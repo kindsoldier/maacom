@@ -1,4 +1,4 @@
-#Maacom - Web mail account manager
+# Maacom - Web mail account manager
 
 I wrote this application for using into small-middle corporation. I wanted to write a simple classic object-oriented web application, that can be used as a training application.
 
