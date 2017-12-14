@@ -1,4 +1,4 @@
-Maacom - Web mail account manager
+==Maacom - Web mail account manager
 
 I wrote this application for using into small-middle corporation. I wanted to write a simple classic object-oriented web application, that can be used as a training application.
 
@@ -7,7 +7,7 @@ The application wrote with
   - Perl Mojolicious as MVC framework and
   - Zurb Foundation as CSS
 
-Work example of configuration Exim and Dovecot attached below the page.
+Work example of configuration Exim and Dovecot attached below the page http://wiki.unix7.org/perl/maacom
 
 You can
 
@@ -19,4 +19,6 @@ You can
 
 Password file in the same Apache htpasswd format.
 
+The application is ready to use, the installation procedure takes 10-15 minutes.
+The procedure is described on the project page http://wiki.unix7.org/perl/maacom
 
