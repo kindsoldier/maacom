@@ -2,14 +2,14 @@
 
 I wrote this application for using into small-middle corporation. I wanted to write a simple classic object-oriented web application, that can be used as a training application.
 
-###The application wrote with
+### The application wrote with
 
   - Perl Mojolicious as MVC framework and
   - Zurb Foundation as CSS
 
 Work example of configuration Exim and Dovecot attached below the page http://wiki.unix7.org/perl/maacom
 
-###You can
+### You can
 
   -    Easy add, delete, rename and edit domain, user and alias records. You can rename entire domain with safe all your accounts!
   -    Set personal and domain mail quotas, size of mailbox calculates in background from mail dirs. 
