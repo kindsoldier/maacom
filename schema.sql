@@ -3,7 +3,7 @@ CREATE TABLE domains (
     id int unique NOT NULL PRIMARY KEY,
     name text unique,
     size int  DEFAULT 0,
-    quota int  DEFAULT 0
+    quota int  DEFAULT 1048576
 );
 CREATE TABLE users (
     id int unique NOT NULL PRIMARY KEY,
@@ -12,7 +12,7 @@ CREATE TABLE users (
     password text,
     hash text,
     size int DEFAULT 0,
-    quota int DEFAULT 10737418240
+    quota int DEFAULT 10240
 );
 CREATE TABLE aliases (
     id int unique NOT NULL PRIMARY KEY,

@@ -284,11 +284,13 @@ sub domain_nextid {
 }
 
 sub domain_add {
-    my ($self, $name) = @_;
+    my ($self, $name, $quota) = @_;
     return undef unless $name;
     return undef if $self->domain_exist($name);
+    $quota ||= 1024*1024;
     my $next_id = $self->domain_nextid;
-    $self->db->do("insert into domains (id, name) values ($next_id, '$name')");
+
+    $self->db->do("insert into domains (id, name, quota) values ($next_id, '$name', $quota)");
     $self->domain_exist($name);
 }
 
@@ -304,8 +306,10 @@ sub domain_update {
     return undef unless $prof;
 
     my $name = $args{name} || $prof->{name};
-    my $quota = $args{quota} || $prof->{quota};
+    my $quota = $args{quota}*1;
+    $quota ||= $prof->{quota};
     my $size = $prof->{size};
+    $args{size} ||= -1;
     $size = $args{size} if $args{size} >= 0;
 
     $self->db->do("update domains set name = '$name', size = $size, quota = $quota where id = $id");
@@ -471,7 +475,7 @@ sub user_add {
     return undef unless $name;
     return undef unless $password;
     return undef unless $domain_id;
-    $quota ||= 1024*1024*1024*10;
+    $quota ||= 1024*10;
 
     return undef if $self->user_exist($name, $domain_id);
     return undef unless $self->domain_profile($domain_id);
@@ -479,7 +483,7 @@ sub user_add {
     my $salt = substr(sha512_base64(sprintf("%X", rand(2**31-1))), 4, 16);
     my $hash = crypt($password,'$6$'.$salt.'$');
 
-    $self->db->do("insert into users (id, name, password, domain_id, hash, $quota)
+    $self->db->do("insert into users (id, name, password, domain_id, hash, quota)
                     values ($next_id, '$name', '$password', $domain_id, '$hash', $quota)");
     $self->user_exist($name, $domain_id);
 }
@@ -908,6 +912,16 @@ sub domain_update_handler {
     $self->render(template => 'domain-update-handler');
 }
 
+sub domain_rename_form {
+    my $self = shift; 
+    $self->render(template => 'domain-rename-form');
+}
+
+sub domain_rename_handler {
+    my $self = shift;
+    $self->render(template => 'domain-rename-handler');
+}
+
 sub domain_delete_form {
     my $self = shift;
     $self->render(template => 'domain-delete-form');
@@ -1248,6 +1262,8 @@ $r->any('/domain/add/form')->over('auth')->to('controller#domain_add_form' );
 $r->any('/domain/add/handler')->over('auth')->to('controller#domain_add_handler' );
 $r->any('/domain/update/form')->over('auth')->to('controller#domain_update_form' );
 $r->any('/domain/update/handler')->over('auth')->to('controller#domain_update_handler' );
+$r->any('/domain/rename/form')->over('auth')->to('controller#domain_rename_form' );
+$r->any('/domain/rename/handler')->over('auth')->to('controller#domain_rename_handler' );
 $r->any('/domain/delete/form')->over('auth')->to('controller#domain_delete_form' );
 $r->any('/domain/delete/handler')->over('auth')->to('controller#domain_delete_handler' );
 
@@ -1341,7 +1357,7 @@ $app->log(Mojo::Log->new(
 my $user = $app->config('user');
 my $group = $app->config('group');
 my $d = Daemon->new($user, $group);
-#$d->fork;
+$d->fork;
 
 $app->hook(before_dispatch => sub {
         my $c = shift;
@@ -1381,7 +1397,7 @@ sub du {
     $maxdeep ||= 10;
     $deep ||= 0;
     my $stat = stat($subj);
-    return int($stat->size/1024) if -f $subj;
+    return int($stat->size/(1024*1024)+0.5) if -f $subj;
 
     $deep += 1;
     return 0 if $deep > $maxdeep;

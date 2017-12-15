@@ -330,6 +330,8 @@ nobase_dist_pkgdata_DATA = \
 	templs/domain-add-handler.html.ep \
 	templs/domain-update-form.html.ep \
 	templs/domain-update-handler.html.ep \
+	templs/domain-rename-form.html.ep \
+	templs/domain-rename-handler.html.ep \
 	templs/domain-delete-form.html.ep \
 	templs/domain-delete-handler.html.ep \
 	\
