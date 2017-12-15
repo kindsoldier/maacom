@@ -30,6 +30,20 @@
         <div class="callout alert">User <%= $user_name %> was not added.</div>
     % }
 % }
+
+% if ($domain_id) {
+    <a class="float-left button tiny" href="/user/list?domain_id=<%= $domain_id %>">
+        <i class="fi-arrow-left"></i>
+    </a>
+% }
+
+% unless ($domain_id) {
+    <a class="float-left button tiny" href="/user/list">
+        <i class="fi-arrow-left"></i>
+    </a>
+% }
+
+
 %#EOF
 
 

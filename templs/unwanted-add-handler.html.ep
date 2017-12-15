@@ -25,6 +25,10 @@
     % }
 % }
 
+<a class="float-left button tiny" href="/unwanted/list">
+    <i class="fi-arrow-left"></i>
+</a>
+
 %#EOF
 
 

@@ -28,5 +28,9 @@
         <div class="callout warning">Host with id <%= $unwanted_id %> not exist</div>
 % }
 
+<a class="float-left button tiny" href="/unwanted/list">
+    <i class="fi-arrow-left"></i>
+</a>
+
 %#EOF
 

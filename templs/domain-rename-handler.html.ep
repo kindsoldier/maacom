@@ -35,6 +35,10 @@
         <div class="callout warning">Domain with id <%= $domain_id %> not exist</div>
 % }
 
+<a class="float-left button tiny" href="/domain/list">
+    <i class="fi-arrow-left"></i>
+</a>
+
 %#EOF
 
 

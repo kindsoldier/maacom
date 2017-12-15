@@ -31,12 +31,17 @@
             <div class="callout alert">Alias <%= $address %> was not updated.</div>
         % }
     % }
+    <a class="float-left button tiny" href="/alias/list?domain_id=<%= $domain_id %>">
+        <i class="fi-arrow-left"></i>
+    </a>
 % }
 
 % unless ($profile) {
-        <div class="callout warning">Alias with id <%= $alias_id %> not exist</div>
+    <div class="callout warning">Alias with id <%= $alias_id %> not exist</div>
+    <a class="float-left button tiny" href="/alias/list">
+        <i class="fi-arrow-left"></i>
+    </a>
 % }
-
 %#EOF
 
 

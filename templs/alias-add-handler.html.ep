@@ -28,4 +28,19 @@
         <div class="callout alert">Alias <%= $alias_name %> was not added.</div>
     % }
 % }
+
+% if ($domain_id) {
+    <a class="float-left button tiny" href="/alias/list?domain_id=<%= $domain_id %>">
+        <i class="fi-arrow-left"></i>
+    </a>
+% }
+
+% unless ($domain_id) {
+    <a class="float-left button tiny" href="/alias/list">
+        <i class="fi-arrow-left"></i>
+    </a>
+% }
+
+
+
 %#EOF

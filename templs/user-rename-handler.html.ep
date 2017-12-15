@@ -32,10 +32,16 @@
             <div class="callout alert">User <%= $address %> was not updated.</div>
         % }
     % }
+    <a class="float-left button tiny" href="/user/list?domain_id=<%= $domain_id %>">
+        <i class="fi-arrow-left"></i>
+    </a>
 % }
 
 % unless ($profile) {
-        <div class="callout warning">User with id <%= $user_id %> not exist</div>
+    <div class="callout warning">User with id <%= $user_id %> not exist</div>
+    <a class="float-left button tiny" href="/user/list">
+        <i class="fi-arrow-left"></i>
+    </a>
 % }
 
 %#EOF

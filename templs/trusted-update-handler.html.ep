@@ -34,6 +34,10 @@
         <div class="callout warning">Host with id <%= $trusted_id %> not exist</div>
 % }
 
+<a class="float-left button tiny" href="/trusted/list">
+    <i class="fi-arrow-left"></i>
+</a>
+
 %#EOF
 
 
