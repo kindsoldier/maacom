@@ -9,11 +9,11 @@
 % my $u = $c->app->user;
 
 % my $domain_id = $c->req->param('domain_id');
+% my $quota = 1024*10;
 
 % if ($domain_id) {
     % my $profile = $u->domain_profile($domain_id);
     % my $domain_name = $profile->{name};
-    % my $quota = 1024*1024*1024*10;
     <div class="grid-container">
         <div class="grid-x grid-padding-x">
           <div class="medium-6 medium-centered cell">
@@ -69,6 +69,10 @@
                             <option value="<%= $rec->{id} %>"><%= $rec->{name} %></option>
                         % }
                     </select >
+                </label>
+                <label>Quota
+                    <input type="number" name="quota" value="<%= $quota %>" required pattern="[0-9]{1,15}"/>
+                    <span class="form-error">Mandatory, one or more ciphers</span>
                 </label>
 
                 <div class="text-center">

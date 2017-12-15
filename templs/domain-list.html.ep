@@ -30,8 +30,10 @@
             <th>#</th>
             <th>domain</th>
             <th><i class="fi-graph-pie"></i></th>
+            <th><i class="fi-alert"></i></th>
             <th><i class="fi-male"></i></th>
             <th><i class="fi-male-female"></i></th>
+            <th><i class="fi-address-book"></i></th>
             <th><i class="fi-pencil"></i></th>
             <th><i class="fi-trash"></i></th>
         </tr>
@@ -45,12 +47,15 @@
         % my $id = $row->{id};
         % my $name = $row->{name};
         % my $size = $row->{size};
+        % my $quota = $row->{quota};
             <tr>
                 <td><%= $n %></td>
                 <td><%= $name %></td>
                 <td><%= $size %></td>
+                <td><%= $quota %></td>
                 <td><a href="/user/list?domain_id=<%= $id %>"><%= $u->domain_user_count($id) %></a></td>
                 <td><a href="/alias/list?domain_id=<%= $id %>"><%= $u->domain_alias_count($id) %></a></td>
+                <td><a href="/domain/rename/form?domain_id=<%= $id %>"><i class="fi-address-book"></i></a></td>
                 <td><a href="/domain/update/form?domain_id=<%= $id %>"><i class="fi-pencil"></i></a></td>
                 <td><a href="/domain/delete/form?domain_id=<%= $id %>"><i class="fi-trash"></i></a></td>
             </tr>

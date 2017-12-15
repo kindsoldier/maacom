@@ -17,6 +17,7 @@
     % my $domain_id = $profile->{domain_id};
     % my $password = $profile->{password};
     % my $address = $profile->{address};
+    % my $quota = $profile->{quota};
 
     <div class="grid-container">
         <div class="grid-x grid-padding-x">
@@ -29,6 +30,11 @@
                     <input type="text" value="<%= $password %>" name="password" required pattern="[_.-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{6,42}"/>
                     <span class="form-error">Mandatory, 6 or more letter</span>
                 </label>
+                <label>Quota
+                    <input type="number" name="quota" value="<%= $quota %>" required pattern="[0-9]{1,15}"/>
+                    <span class="form-error">Mandatory, one or more ciphers</span>
+                </label>
+
                 <div class="text-center">
                     <button type="submit" class="button">Accept</button>
                     <a class="button" href="/user/list?">Escape</a>

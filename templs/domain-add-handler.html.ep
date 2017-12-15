@@ -9,13 +9,14 @@
 % my $u = $c->app->user;
 % my $name = $c->req->param('domain_name');
 % my $id = $u->domain_exist($name);
+% my $quota = $c->req->param('quota') || 0;
 
 % if ($id) {
     <div class="callout warning">Domain <%= $name %> already exists</div>
 % }
 
 % unless ($id) {
-    % my $res = $u->domain_add($name);
+    % my $res = $u->domain_add($name, $quota);
     % if ($res) {
         <div class="callout success">Domain <%= $name %> has been added.</div>
     % }

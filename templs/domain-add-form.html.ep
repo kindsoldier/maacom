@@ -7,6 +7,7 @@
 % use Mojo::Util qw(dumper);
 
 % my $u = $c->app->user;
+% my $quota = 1024*1024;
 
 <div class="grid-container">
     <div class="grid-x grid-padding-x">
@@ -18,6 +19,12 @@
                 <input type="text" name="domain_name" placeholder="domain.org" required pattern="[_.-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{5,42}"/>
                 <span class="form-error">Mandatory, 5 or more letter</span>
             </label>
+
+            <label>Domain quota
+                <input type="number" name="quota" value="<%= $quota %>" required pattern="[0-9]{1,15}"/>
+                    <span class="form-error">Mandatory, one or more ciphers</span>
+            </label>
+
             <div class="text-center">
                 <button type="submit" class="button">Accept</button>
                 <a class="button" href="/domain/list">Escape</a>

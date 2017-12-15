@@ -8,25 +8,19 @@
 
 % my $u = $c->app->user;
 
-% my $name = $c->req->param('domain_name');
 % my $domain_id = $c->req->param('domain_id') || 0;
 % my $profile = $u->domain_profile($domain_id);
+% my $quota = $c->req->param('quota') || $profile->{quota};
 
 % if ($profile) {
-    % my $cid = $u->domain_exist($name);
-    % if ($cid) {
-        <div class="callout warning">Domain <%= $name %> already exists</div>
+    % my $name = $profile->{name};
+    % my $res = $u->domain_update($domain_id, quota => $quota);
+    % if ($res) {
+        <div class="callout success">Domain <%= $name %> has been updated.</div>
     % }
 
-    % unless ($cid) {
-        % my $res = $u->domain_update($domain_id, name => $name);
-        % if ($res) {
-            <div class="callout success">Domain <%= $name %> has been updated.</div>
-        % }
-
-        % unless ($res) {
-            <div class="callout alert">Domain <%= $name %> was not updated.</div>
-        % }
+    % unless ($res) {
+        <div class="callout alert">Domain <%= $name %> was not updated.</div>
     % }
 % }
 

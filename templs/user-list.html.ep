@@ -28,6 +28,7 @@
                 <th>#</th>
                 <th>address</th>
                 <th><i class="fi-graph-pie"></i></th>
+                <th><i class="fi-alert"></i></th>
                 <th><i class="fi-address-book"></i></th>
                 <th><i class="fi-pencil"></i></th>
                 <th><i class="fi-trash"></i></th>
@@ -42,10 +43,12 @@
                 % my $user_id = $row->{id};
                 % my $domain_id = $row->{domain_id};
                 % my $size = $row->{size} || 0;
+                % my $quota = $row->{quota} || 0;
                 <tr>
                     <td><%= $n %></td>
                     <td><%= $address %></td>
                     <td><%= $size %></td>
+                    <td><%= $quota %></td>
                     <td><a href="/user/rename/form?user_id=<%= $user_id %>"><i class="fi-address-book"></i></a></td>
                     <td><a href="/user/update/form?user_id=<%= $user_id %>"><i class="fi-pencil"></i></a></td>
                     <td><a href="/user/delete/form?user_id=<%= $user_id %>"><i class="fi-trash"></i></a></td>
@@ -72,6 +75,7 @@
                 <th>#</th>
                 <th>address</th>
                 <th><i class="fi-graph-pie"></i></th>
+                <th><i class="fi-alert"></i></th>
                 <th><i class="fi-at-sign"></i></th>
                 <th><i class="fi-address-book"></i></th>
                 <th><i class="fi-pencil"></i></th>
@@ -87,10 +91,12 @@
                 % my $user_id = $row->{id};
                 % my $domain_id = $row->{domain_id};
                 % my $size = $row->{size} || 0;
+                % my $quota = $row->{quota} || 0;
                 <tr>
                     <td><%= $n %></td>
                     <td><%= $address %></td>
                     <td><%= $size %></td>
+                    <td><%= $quota %></td>
                     <td><a href="/user/list?domain_id=<%= $domain_id %>"><i class="fi-at-sign"></i></a></td>
                     <td><a href="/user/rename/form?user_id=<%= $user_id %>"><i class="fi-address-book"></i></a></td>
                     <td><a href="/user/update/form?user_id=<%= $user_id %>"><i class="fi-pencil"></i></a></td>
