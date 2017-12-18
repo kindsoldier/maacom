@@ -1,5 +1,4 @@
 AC_INIT(maacom.pl,0.04)
-
 AM_INIT_AUTOMAKE
 AC_PREFIX_DEFAULT(/usr/local)
 
@@ -245,5 +244,3 @@ init.d/maacom
 ])
 
 dnl EOF
-
-
