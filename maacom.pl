@@ -1157,10 +1157,40 @@ sub startup {
 use strict;
 use warnings;
 use Mojo::Server::Prefork;
-use Mojo::Util qw(dumper);
+use Mojo::Util qw(dumper getopt);
 use File::stat;
 
 my $appname = 'maacom';
+#--------------
+#--- GETOPT ---
+#--------------
+
+getopt
+    'h|help' => \my $help,
+    'c|config=s' => \my $conffile,
+    'f|nofork' => \my $nofork,
+    'u|user=s' => \my $user,
+    'g|group=s' => \my $group;
+
+if ($help) {
+    print qq(
+Usage: app [OPTIONS]
+
+Options
+    -h | --help           This help
+    -c | --config=path    Path to config file
+    -u | --user=user      System owner of process
+    -g | --group=group    System group
+    -f | --nofork         Dont fork process
+
+The options override options from configuration file
+    )."\n";
+    exit 0;
+}
+
+#------------------
+#--- APP CONFIG ---
+#------------------
 
 my $server = Mojo::Server::Prefork->new;
 my $app = $server->build_app('MAM');
@@ -1171,7 +1201,7 @@ $app->secrets(['6d578e43ba88260e0375a1a35fd7954b']);
 $app->static->paths(['@app_libdir@/public']);
 $app->renderer->paths(['@app_libdir@/templs']);
 
-$app->config(conffile => '@app_confdir@/maacom.conf');
+$app->config(conffile => $conffile || '@app_confdir@/maacom.conf');
 $app->config(pwfile => '@app_confdir@/maacom.pw');
 $app->config(logfile => '@app_logdir@/maacom.log');
 $app->config(loglevel => 'info');
@@ -1192,14 +1222,14 @@ $app->config(dblogin => '');
 $app->config(dbpassword => '');
 $app->config(dbengine => 'sqlite3');
 
-$app->config(group => '@app_group@');
-$app->config(user => '@app_user@');
+$app->config(group => $group || '@app_group@');
+$app->config(user => $user || '@app_user@');
 
 if (-r $app->config('conffile')) {
     $app->log->debug("Load configuration from ".$app->config('conffile'));
-#    $app->plugin('JSONConfig', { file => $app->config('conffile') });
     my $c = aConfig->new($app->config('conffile'));
     my $hash = $c->read;
+
     foreach my $key (keys %$hash) {
         $app->config($key => $hash->{$key});
     }
@@ -1345,19 +1375,31 @@ $server->listen(\@listen);
 $server->heartbeat_interval(3);
 $server->heartbeat_timeout(60);
 
-
-$server->pid_file($app->config('pidfile'));
-
 $app->log(Mojo::Log->new( 
                 path => $app->config('logfile'),
                 level => $app->config('loglevel')
 ));
 
+#--------------
+#--- DAEMON ---
+#--------------
 
-my $user = $app->config('user');
-my $group = $app->config('group');
-my $d = Daemon->new($user, $group);
-$d->fork;
+unless ($nofork) {
+    my $d = Daemon->new;
+    my $user = $app->config('user');
+    my $group = $app->config('group');
+    $d->fork;
+    $app->log(Mojo::Log->new(
+                path => $app->config('logfile'),
+                level => $app->config('loglevel')
+    ));
+}
+
+$server->pid_file($app->config('pidfile'));
+
+#-----------
+#--- LOG ---
+#-----------
 
 $app->hook(before_dispatch => sub {
         my $c = shift;
@@ -1381,6 +1423,9 @@ $app->hook(before_dispatch => sub {
         }
 });
 
+#--------------
+#--- SIGNAL ---
+#--------------
 
 # Set signal handler
 local $SIG{HUP} = sub {
