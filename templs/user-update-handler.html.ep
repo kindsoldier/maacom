@@ -9,6 +9,7 @@
 % my $u = $c->app->user;
 
 % my $user_id = $c->req->param('user_id') || 0;
+% my $gecos = $c->req->param('gecos');
 % my $password = $c->req->param('password');
 % my $quota = $c->req->param('quota');
 
@@ -20,7 +21,7 @@
     % my $address = $profile->{address};
     % my $quota = $quota || $profile->{quota};
 
-    % my $res = $u->user_update($user_id, password => $password, quota => $quota);
+    % my $res = $u->user_update($user_id, gecos => $gecos, password => $password, quota => $quota);
     % if ($res) {
         <div class="callout success">User <%= $address %> has been updated.</div>
     % }

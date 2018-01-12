@@ -22,7 +22,7 @@
                 <h5 class="text-center">Edit domain</h5>
                 <input type="hidden" name="forwarded_id" value="<%= $forwarded_id %>"/>
                 <label>Domain name
-                    <input type="text" value="<%= $forwarded_name %>" name="forwarded_name" required pattern="[_.-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{5,42}"/>
+                    <input type="text" value="<%= $forwarded_name %>" name="forwarded_name" required pattern="[_\.a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{5,42}"/>
                     <span class="form-error">Mandatory, 5 or more letter</span>
                 </label>
                 <div class="text-center">

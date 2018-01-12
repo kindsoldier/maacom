@@ -26,7 +26,7 @@
                 <h5 class="text-center">Edit alias <%= $address %></h5>
                 <input type="hidden" name="alias_id" value="<%= $alias_id %>"/>
                 <label>Alias name
-                    <input type="text" value="<%= $alias_name %>" name="alias_name" required pattern="[_.-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,42}"/>
+                    <input type="text" value="<%= $alias_name %>" name="alias_name" required pattern="[_\.a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,42}"/>
                     <span class="form-error">Mandatory, 2 or more letter</span>
                 </label>
                 <div class="text-center">

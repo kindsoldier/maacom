@@ -21,11 +21,11 @@
                 <h5 class="text-center">Add alias to domain <%= $domain_name %></h5>
                 <input type="hidden" name="domain_id" value="<%= $domain_id %>"/>
                 <label>Alias name
-                    <input type="text" name="alias_name" placeholder="aliasname" required pattern="[_.a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,42}"/>
+                    <input type="text" name="alias_name" placeholder="aliasname" required pattern="[_.\.a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,42}"/>
                     <span class="form-error">Mandatory, 2 or more letter</span>
                 </label>
                 <label>Destination list
-                    <input type="text" name="list" placeholder="some@bare.org,foo@bar.com" required pattern="[_.,@a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{5,42}"/>
+                    <input type="text" name="list" placeholder="some@bare.org,foo@bar.com" required pattern="[_.,@\.a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{5,42}"/>
                     <span class="form-error">Mandatory, 6 or more letter</span>
                 </label>
                 <div class="text-center">
@@ -47,7 +47,7 @@
             <form accept-charset="UTF-8" action="/alias/add/handler" method="post" data-abide novalidate>
                 <h5 class="text-center">Add alias</h5>
                 <label>Alias name
-                    <input type="text" name="alias_name" placeholder="aliasname" required pattern="[_.a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,42}"/>
+                    <input type="text" name="alias_name" placeholder="aliasname" required pattern="[_.\.a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{2,42}"/>
                     <span class="form-error">Mandatory, 2 or more letter</span>
                 </label>
                 <label>Domain
@@ -59,7 +59,7 @@
                     </select >
                 </label>
                 <label>Destination list
-                    <input type="text" name="list" placeholder="some@bare.org,foo@bar.com" required pattern="[_.@,a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{5,42}"/>
+                    <input type="text" name="list" placeholder="some@bare.org,foo@bar.com" required pattern="[_.@,\.a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{5,42}"/>
                     <span class="form-error">Mandatory, 6 or more letter</span>
                 </label>
 

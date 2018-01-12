@@ -13,6 +13,7 @@
 
 % if ($profile) {
     % my $user_name = $profile->{name};
+    % my $gecos = $profile->{gecos};
     % my $domain_name = $profile->{domain_name};
     % my $domain_id = $profile->{domain_id};
     % my $password = $profile->{password};
@@ -26,8 +27,11 @@
             <form accept-charset="UTF-8" action="/user/update/handler" method="post" data-abide novalidate>
                 <h5 class="text-center">Edit user <%= $address %></h5>
                 <input type="hidden" name="user_id" value="<%= $user_id %>"/>
+                <label>Gecos
+                    <input type="text" value="<%= $gecos %>" name="gecos"/>
+                </label>
                 <label>Password
-                    <input type="text" value="<%= $password %>" name="password" required pattern="[_.-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{6,42}"/>
+                    <input type="text" value="<%= $password %>" name="password" required pattern="[_\.a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]{6,42}"/>
                     <span class="form-error">Mandatory, 6 or more letter</span>
                 </label>
                 <label>Quota

@@ -434,6 +434,7 @@ sub user_profile {
     return undef unless $id;
     $self->db->exec1("select u.id as id,
                                     u.name as name,
+                                    u.gecos as gecos,
                                     u.name || '\@' || d.name as address,
                                     u.domain_id as domain_id,
                                     d.name as domain_name,
@@ -451,6 +452,7 @@ sub user_list {
     my $and = "and u.domain_id = $domain_id" if $domain_id;
     $self->db->exec("select u.id as id,
                             u.name as name,
+                            u.gecos as gecos,
                             u.name || '\@' || d.name as address,
                             u.domain_id as domain_id,
                             d.name as domain_name,
@@ -471,20 +473,20 @@ sub user_nextid {
 }
 
 sub user_add {
-    my ($self, $name, $password, $domain_id, $quota) = @_;
+    my ($self, $name, $gecos, $password, $domain_id, $quota) = @_;
     return undef unless $name;
     return undef unless $password;
     return undef unless $domain_id;
     $quota ||= 1024*10;
-
+    $gecos ||= '';
     return undef if $self->user_exist($name, $domain_id);
     return undef unless $self->domain_profile($domain_id);
     my $next_id = $self->user_nextid;
     my $salt = substr(sha512_base64(sprintf("%X", rand(2**31-1))), 4, 16);
     my $hash = crypt($password,'$6$'.$salt.'$');
 
-    $self->db->do("insert into users (id, name, password, domain_id, hash, quota)
-                    values ($next_id, '$name', '$password', $domain_id, '$hash', $quota)");
+    $self->db->do("insert into users (id, name, gecos, password, domain_id, hash, quota)
+                    values ($next_id, '$name', '$gecos', '$password', $domain_id, '$hash', $quota)");
     $self->user_exist($name, $domain_id);
 }
 
@@ -494,6 +496,7 @@ sub user_update {
     return undef unless $prof;
 
     my $name = $args{name} || $prof->{name};
+    my $gecos = $args{gecos} || $prof->{gecos};
     my $password = $args{password} || $prof->{password};
     my $hash = $prof->{hash};
     if ($args{password}) {
@@ -507,6 +510,7 @@ sub user_update {
     $size ||= 0;
 
     $self->db->do("update users set name = '$name',
+                                gecos = '$gecos',
                                 password = '$password',
                                 size = $size,
                                 quota = $quota,

@@ -10,6 +10,7 @@
 
 % my $user_name = $c->req->param('user_name');
 % my $domain_id = $c->req->param('domain_id');
+% my $gecos = $c->req->param('gecos');
 % my $password = $c->req->param('password');
 % my $quota = $c->req->param('quota');
 
@@ -21,7 +22,7 @@
 % }
 
 % unless ($cid) {
-    % my $id = $u->user_add($user_name, $password, $domain_id, $quota);
+    % my $id = $u->user_add($user_name, $gecos, $password, $domain_id, $quota);
     % if ($id) {
         <div class="callout success">User <%= $user_name %> has been added.</div>
     % }
