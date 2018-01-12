@@ -5,7 +5,6 @@ CREATE TABLE domains (
     size int  DEFAULT 0,
     quota int  DEFAULT 1048576
 );
-DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     id int unique NOT NULL PRIMARY KEY,
     name text,
